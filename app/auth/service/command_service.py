@@ -59,4 +59,7 @@ class AuthCommandService:
     async def _record_login_history(
         self, user_id: str, login_ip: str, success: bool, fail_reason: str | None
     ):
-        await self.command_repo.insert_login_history(user_id, login_ip, success, fail_reason)
+        try:
+            await self.command_repo.insert_login_history(user_id, login_ip, success, fail_reason)
+        except Exception:
+            pass  # FK 제약 등으로 이력 기록 실패 시 무시 (로그인 처리에 영향 없음)

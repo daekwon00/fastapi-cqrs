@@ -91,6 +91,18 @@ uv run uvicorn app.main:app --reload --port 8082
 docker compose up -d
 ```
 
+### 테스트 실행
+
+```bash
+# 전체 테스트
+uv run pytest -v
+
+# 특정 모듈만
+uv run pytest tests/test_auth.py -v
+```
+
+> PostgreSQL 실행 필요 (localhost:5432, intranet DB, seed 데이터 포함)
+
 ### API 문서
 
 서버 실행 후 접속:
@@ -114,3 +126,4 @@ docker compose up -d
 ## 참조
 
 - 원본 프로젝트: [spring-cqrs](../spring-cqrs/) (Spring Boot 4 + Java 25 + MyBatis)
+- 통합 테스트: 40개 (10개 도메인 모듈 커버)

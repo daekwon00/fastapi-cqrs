@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.common.exception_handlers import register_exception_handlers
+from app.common.middleware import RequestLoggingMiddleware
 from app.database import close_pool, create_pool
 
 
@@ -29,6 +30,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# 요청 로깅
+app.add_middleware(RequestLoggingMiddleware)
 
 # 예외 핸들러
 register_exception_handlers(app)
