@@ -41,10 +41,16 @@ async def health():
 
 
 # 라우터 등록
+from app.ai.router import router as ai_router  # noqa: E402
 from app.auth.router import router as auth_router  # noqa: E402
 from app.board.router import router as board_router  # noqa: E402
+from app.dashboard.router import router as dashboard_router  # noqa: E402
+from app.file.router import router as file_router  # noqa: E402
 from app.user.router import router as user_router  # noqa: E402
 
 app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(board_router)
+app.include_router(file_router)
+app.include_router(dashboard_router)
+app.include_router(ai_router)
