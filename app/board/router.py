@@ -36,7 +36,7 @@ async def get_post_list(
     board_id: str,
     paging: PagingParams = Depends(),
     search: str | None = Query(None, description="검색어"),
-    search_type: str | None = Query("all", description="검색 타입 (title, author, all)"),
+    search_type: str | None = Query("all", alias="searchType", description="검색 타입 (title, author, all)"),
 ):
     content = await post_query_service.get_post_list(
         board_id, search, search_type, paging.sort_order, paging.limit, paging.offset

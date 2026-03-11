@@ -1,14 +1,23 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 
 from app.common.schemas import ApiResponse
 from app.security.dependencies import CurrentUser, get_current_user
-from app.user.schemas import ChangePasswordRequest, UpdateProfileRequest, UserProfileResponse
+from app.user.schemas import ChangePasswordRequest, LoginHistoryResponse, UpdateProfileRequest, UserProfileResponse
 from app.user.service.command_service import UserCommandService
 from app.user.service.query_service import UserQueryService
 
 router = APIRouter(prefix="/api/v1/users", tags=["User"])
 query_service = UserQueryService()
 command_service = UserCommandService()
+
+
+@router.get("/me/login-history", response_model=ApiResponse[list[LoginHistoryResponse]])
+async def get_my_login_history(
+    current_user: CurrentUser = Depends(get_current_user),
+    size: int = Query(10, ge=1, le=100),
+):
+    result = await query_service.get_login_history(current_user.user_id, size)
+    return ApiResponse.ok(result)
 
 
 @router.get("/me", response_model=ApiResponse[UserProfileResponse])

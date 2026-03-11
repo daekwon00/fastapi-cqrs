@@ -11,9 +11,9 @@ class SortOrder(str, Enum):
 class PagingParams:
     def __init__(
         self,
-        page: int = Query(1, ge=1, description="페이지 번호 (1-based)"),
+        page: int = Query(0, ge=0, description="페이지 번호 (0-based)"),
         size: int = Query(10, ge=1, le=100, description="페이지 크기"),
-        sort_order: SortOrder = Query(SortOrder.DESC, description="정렬 순서"),
+        sort_order: SortOrder = Query(SortOrder.DESC, alias="sortOrder", description="정렬 순서"),
     ):
         self.page = page
         self.size = size
@@ -21,7 +21,7 @@ class PagingParams:
 
     @property
     def offset(self) -> int:
-        return (self.page - 1) * self.size
+        return self.page * self.size
 
     @property
     def limit(self) -> int:

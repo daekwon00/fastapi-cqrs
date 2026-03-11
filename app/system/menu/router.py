@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 
 from app.common.schemas import ApiResponse
 from app.security.dependencies import CurrentUser, get_current_user, require_admin
-from app.system.menu.schemas import CreateMenuRequest, MenuResponse, UpdateMenuRequest
+from app.system.menu.schemas import CreateMenuRequest, MenuResponse, MyMenusResponse, UpdateMenuRequest
 from app.system.menu.service.command_service import MenuCommandService
 from app.system.menu.service.query_service import MenuQueryService
 
@@ -16,11 +16,11 @@ async def get_menu_list():
     return ApiResponse.ok(await query_service.get_all_menus())
 
 
-@router.get("/api/v1/menus/my", response_model=ApiResponse[list[MenuResponse]])
+@router.get("/api/v1/menus/my", response_model=ApiResponse[MyMenusResponse])
 async def get_my_menus(current_user: CurrentUser = Depends(get_current_user)):
-    if current_user.is_admin:
-        return ApiResponse.ok(await query_service.get_all_menus())
-    return ApiResponse.ok(await query_service.get_menus_by_role_ids(current_user.roles))
+    menus = await query_service.get_menus_by_role_ids(current_user.roles)
+    admin_menus = await query_service.get_admin_menus() if current_user.is_admin else []
+    return ApiResponse.ok(MyMenusResponse(menus=menus, admin_menus=admin_menus))
 
 
 @router.post("/api/v1/admin/menus", response_model=ApiResponse[list[MenuResponse]],

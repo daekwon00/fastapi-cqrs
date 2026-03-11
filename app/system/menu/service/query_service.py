@@ -14,6 +14,10 @@ class MenuQueryService:
         rows = await self.repo.select_menus_by_role_ids(role_ids)
         return self._build_tree(rows)
 
+    async def get_admin_menus(self) -> list[MenuResponse]:
+        rows = await self.repo.select_admin_menus()
+        return self._build_tree(rows)
+
     def _build_tree(self, rows) -> list[MenuResponse]:
         items = {}
         for r in rows:

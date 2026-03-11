@@ -13,6 +13,12 @@ class MenuResponse(BaseModel):
     model_config = {"populate_by_name": True}
 
 
+class MyMenusResponse(BaseModel):
+    menus: list[MenuResponse]
+    admin_menus: list[MenuResponse] = Field(default_factory=list, alias="adminMenus")
+    model_config = {"populate_by_name": True}
+
+
 class CreateMenuRequest(BaseModel):
     id: str = Field(..., min_length=1)
     name: str = Field(..., min_length=1)

@@ -13,9 +13,9 @@ command_service = AdminUserCommandService()
 
 @router.get("", response_model=ApiResponse[PageResponse[AdminUserResponse]])
 async def get_user_list(
-    page: int = Query(1, ge=1), size: int = Query(10, ge=1), search: str | None = Query(None),
+    page: int = Query(0, ge=0), size: int = Query(10, ge=1), search: str | None = Query(None),
 ):
-    offset = (page - 1) * size
+    offset = page * size
     content = await query_service.get_user_list(search, size, offset)
     total = await query_service.get_user_count(search)
     return ApiResponse.ok(PageResponse.of(content, total, page, size))

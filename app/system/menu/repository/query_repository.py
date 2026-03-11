@@ -16,6 +16,15 @@ class MenuQueryRepository:
                  FROM tb_menu m
                  INNER JOIN tb_role_menu rm ON m.menu_id = rm.menu_id
                 WHERE m.use_yn = true AND rm.role_id = ANY($1::text[])
+                  AND m.menu_url NOT LIKE '/admin%'
                 ORDER BY m.sort_order""",
             role_ids,
+        )
+
+    async def select_admin_menus(self) -> list[asyncpg.Record]:
+        return await get_pool().fetch(
+            """SELECT menu_id, parent_menu_id, menu_name, menu_url, menu_icon, sort_order, use_yn
+                 FROM tb_menu
+                WHERE use_yn = true AND menu_url LIKE '/admin%'
+                ORDER BY sort_order"""
         )

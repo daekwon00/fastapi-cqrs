@@ -4,6 +4,16 @@ from app.database import get_pool
 
 
 class UserQueryRepository:
+    async def select_login_history(self, user_id: str, limit: int) -> list[asyncpg.Record]:
+        return await get_pool().fetch(
+            """SELECT login_ip, login_success, login_fail_reason, login_date
+                 FROM tb_login_history
+                WHERE user_id = $1
+                ORDER BY login_date DESC
+                LIMIT $2""",
+            user_id, limit,
+        )
+
     async def select_user_profile(self, user_id: str) -> asyncpg.Record | None:
         pool = get_pool()
         return await pool.fetchrow(

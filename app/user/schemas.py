@@ -3,6 +3,14 @@ from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field
 
 
+class LoginHistoryResponse(BaseModel):
+    login_ip: str | None = Field(None, alias="loginIp")
+    login_success: bool = Field(alias="loginSuccess")
+    login_fail_reason: str | None = Field(None, alias="loginFailReason")
+    login_date: datetime | None = Field(None, alias="loginDate")
+    model_config = {"populate_by_name": True}
+
+
 # Request
 class UpdateProfileRequest(BaseModel):
     name: str = Field(..., min_length=1, description="이름")

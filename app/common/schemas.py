@@ -1,6 +1,6 @@
 from typing import Generic, TypeVar
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 T = TypeVar("T")
 
@@ -21,10 +21,12 @@ class ApiResponse(BaseModel, Generic[T]):
 
 class PageResponse(BaseModel, Generic[T]):
     content: list[T]
-    total_elements: int
-    total_pages: int
+    total_elements: int = Field(alias="totalElements")
+    total_pages: int = Field(alias="totalPages")
     page: int
     size: int
+
+    model_config = {"populate_by_name": True}
 
     @classmethod
     def of(cls, content: list[T], total_elements: int, page: int, size: int) -> "PageResponse[T]":

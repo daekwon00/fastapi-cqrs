@@ -1,6 +1,6 @@
 from app.common.exceptions import NotFoundException
 from app.user.repository.query_repository import UserQueryRepository
-from app.user.schemas import UserProfileResponse
+from app.user.schemas import LoginHistoryResponse, UserProfileResponse
 
 
 class UserQueryService:
@@ -12,3 +12,7 @@ class UserQueryService:
         if row is None:
             raise NotFoundException("사용자를 찾을 수 없습니다.")
         return UserProfileResponse(**dict(row))
+
+    async def get_login_history(self, user_id: str, limit: int) -> list[LoginHistoryResponse]:
+        rows = await self.repo.select_login_history(user_id, limit)
+        return [LoginHistoryResponse(**dict(row)) for row in rows]
