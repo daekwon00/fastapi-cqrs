@@ -82,7 +82,7 @@ cp .env.example .env
 # .env 파일 편집
 
 # 서버 실행
-uv run uvicorn app.main:app --reload --port 8082
+uv run uvicorn app.main:app --reload --port 8081
 ```
 
 ### Docker 실행
@@ -106,8 +106,8 @@ uv run pytest tests/test_auth.py -v
 ### API 문서
 
 서버 실행 후 접속:
-- Swagger UI: http://localhost:8082/docs
-- ReDoc: http://localhost:8082/redoc
+- Swagger UI: http://localhost:8081/docs
+- ReDoc: http://localhost:8081/redoc
 
 ## 환경변수
 
@@ -120,7 +120,7 @@ uv run pytest tests/test_auth.py -v
 | DB_NAME | DB 이름 | intranet |
 | DB_SCHEMA | DB 스키마 | internal |
 | JWT_SECRET | JWT 서명 키 | - |
-| APP_PORT | 서버 포트 | 8082 |
+| APP_PORT | 서버 포트 | 8081 |
 | FILE_UPLOAD_DIR | 파일 업로드 경로 | ./uploads |
 
 ## 참조

@@ -20,7 +20,7 @@ class Settings(BaseSettings):
 
     # Server
     APP_HOST: str = "0.0.0.0"
-    APP_PORT: int = 8082
+    APP_PORT: int = 8081
 
     # AI
     AI_DEFAULT_PROVIDER: str = "anthropic"

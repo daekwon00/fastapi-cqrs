@@ -109,7 +109,7 @@ FILE_UPLOAD_DIR=./uploads
 
 # Server
 APP_HOST=0.0.0.0
-APP_PORT=8082
+APP_PORT=8081
 
 # AI API Keys (필요 시 설정)
 AI_DEFAULT_PROVIDER=anthropic
@@ -118,7 +118,7 @@ AI_OPENAI_API_KEY=
 AI_GEMINI_API_KEY=
 ```
 
-> `APP_PORT=8082` — Spring Boot(8081)와 동시 실행 가능하도록 포트 분리.
+> `APP_PORT=8081` — Spring Boot와 동일 포트로 대체 실행. 동시 실행 시 포트 충돌에 주의.
 
 ---
 
@@ -156,11 +156,11 @@ asyncio.run(test())
 
 ```bash
 # 개발 모드 (자동 리로드)
-uv run uvicorn app.main:app --reload --port 8082
+uv run uvicorn app.main:app --reload --port 8081
 
 # API 문서 확인
-# Swagger UI: http://localhost:8082/docs
-# ReDoc:      http://localhost:8082/redoc
+# Swagger UI: http://localhost:8081/docs
+# ReDoc:      http://localhost:8081/redoc
 ```
 
 ---
