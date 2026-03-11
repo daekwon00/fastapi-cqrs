@@ -1,12 +1,12 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
+
+from app.common.schemas import CamelModel
 
 
-class MenuRoleResponse(BaseModel):
+class MenuRoleResponse(CamelModel):
     menu_id: str = Field(alias="menuId")
     role_id: str = Field(alias="roleId")
-    model_config = {"populate_by_name": True}
 
 
-class UpdateMenuRoleRequest(BaseModel):
+class UpdateMenuRoleRequest(CamelModel):
     menu_ids: list[str] = Field(alias="menuIds")
-    model_config = {"populate_by_name": True}

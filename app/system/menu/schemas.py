@@ -1,7 +1,9 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
+
+from app.common.schemas import CamelModel
 
 
-class MenuResponse(BaseModel):
+class MenuResponse(CamelModel):
     id: str
     name: str
     path: str | None = None
@@ -10,16 +12,14 @@ class MenuResponse(BaseModel):
     sort_order: int = Field(alias="sortOrder")
     is_active: bool = Field(alias="isActive")
     children: list["MenuResponse"] = []
-    model_config = {"populate_by_name": True}
 
 
-class MyMenusResponse(BaseModel):
+class MyMenusResponse(CamelModel):
     menus: list[MenuResponse]
     admin_menus: list[MenuResponse] = Field(default_factory=list, alias="adminMenus")
-    model_config = {"populate_by_name": True}
 
 
-class CreateMenuRequest(BaseModel):
+class CreateMenuRequest(CamelModel):
     id: str = Field(..., min_length=1)
     name: str = Field(..., min_length=1)
     path: str | None = None
@@ -28,7 +28,7 @@ class CreateMenuRequest(BaseModel):
     sort_order: int = Field(0, alias="sortOrder")
 
 
-class UpdateMenuRequest(BaseModel):
+class UpdateMenuRequest(CamelModel):
     name: str = Field(..., min_length=1)
     path: str | None = None
     icon: str | None = None

@@ -1,5 +1,7 @@
 from pydantic import BaseModel, EmailStr, Field
 
+from app.common.schemas import CamelModel
+
 
 # Request
 class LoginRequest(BaseModel):
@@ -14,7 +16,7 @@ class RegisterRequest(BaseModel):
     email: EmailStr = Field(..., description="이메일")
 
 
-class RefreshRequest(BaseModel):
+class RefreshRequest(CamelModel):
     refresh_token: str = Field(..., alias="refreshToken", description="리프레시 토큰")
 
 
@@ -27,15 +29,11 @@ class UserInfoResponse(BaseModel):
     role: str
 
 
-class LoginResponse(BaseModel):
+class LoginResponse(CamelModel):
     access_token: str = Field(alias="accessToken")
     refresh_token: str = Field(alias="refreshToken")
     user: UserInfoResponse
 
-    model_config = {"populate_by_name": True}
 
-
-class TokenResponse(BaseModel):
+class TokenResponse(CamelModel):
     access_token: str = Field(alias="accessToken")
-
-    model_config = {"populate_by_name": True}

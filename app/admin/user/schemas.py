@@ -1,7 +1,9 @@
 from pydantic import BaseModel, Field
 
+from app.common.schemas import CamelModel
 
-class AdminUserResponse(BaseModel):
+
+class AdminUserResponse(CamelModel):
     id: str
     username: str
     name: str
@@ -13,8 +15,6 @@ class AdminUserResponse(BaseModel):
     created_at: str | None = Field(None, alias="createdAt")
     is_active: bool = Field(alias="isActive")
     last_login_at: str | None = Field(None, alias="lastLoginAt")
-
-    model_config = {"populate_by_name": True}
 
 
 class CreateUserRequest(BaseModel):

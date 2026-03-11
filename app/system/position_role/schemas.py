@@ -1,13 +1,13 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
+
+from app.common.schemas import CamelModel
 
 
-class PositionRoleResponse(BaseModel):
+class PositionRoleResponse(CamelModel):
     position_id: str = Field(alias="positionId")
     position_name: str = Field(alias="positionName")
     role_ids: list[str] = Field(alias="roleIds")
-    model_config = {"populate_by_name": True}
 
 
-class UpdatePositionRoleRequest(BaseModel):
+class UpdatePositionRoleRequest(CamelModel):
     role_ids: list[str] = Field(alias="roleIds")
-    model_config = {"populate_by_name": True}

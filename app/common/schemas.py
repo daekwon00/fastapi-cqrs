@@ -5,6 +5,11 @@ from pydantic import BaseModel, Field
 T = TypeVar("T")
 
 
+class CamelModel(BaseModel):
+    """camelCase alias를 사용하는 모델의 공통 베이스"""
+    model_config = {"populate_by_name": True, "serialize_by_alias": True}
+
+
 class ApiResponse(BaseModel, Generic[T]):
     success: bool
     data: T | None = None
@@ -19,14 +24,12 @@ class ApiResponse(BaseModel, Generic[T]):
         return cls(success=False, message=message)
 
 
-class PageResponse(BaseModel, Generic[T]):
+class PageResponse(CamelModel, Generic[T]):
     content: list[T]
     total_elements: int = Field(alias="totalElements")
     total_pages: int = Field(alias="totalPages")
     page: int
     size: int
-
-    model_config = {"populate_by_name": True}
 
     @classmethod
     def of(cls, content: list[T], total_elements: int, page: int, size: int) -> "PageResponse[T]":

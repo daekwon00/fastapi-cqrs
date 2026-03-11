@@ -1,13 +1,14 @@
 from pydantic import BaseModel, Field
 
+from app.common.schemas import CamelModel
 
-class AdminBoardResponse(BaseModel):
+
+class AdminBoardResponse(CamelModel):
     id: str
     name: str
     description: str | None = None
     is_active: bool = Field(alias="isActive")
     post_count: int = Field(alias="postCount")
-    model_config = {"populate_by_name": True}
 
 
 class CreateBoardRequest(BaseModel):

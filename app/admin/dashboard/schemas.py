@@ -1,18 +1,18 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
+
+from app.common.schemas import CamelModel
 
 
-class AdminDashboardStatsResponse(BaseModel):
+class AdminDashboardStatsResponse(CamelModel):
     total_users: int = Field(alias="totalUsers")
     today_registered: int = Field(alias="todayRegistered")
     active_boards: int = Field(alias="activeBoards")
     today_posts: int = Field(alias="todayPosts")
-    model_config = {"populate_by_name": True}
 
 
-class RecentUserResponse(BaseModel):
+class RecentUserResponse(CamelModel):
     id: str
     username: str
     name: str
     email: str | None = None
     created_at: str | None = Field(None, alias="createdAt")
-    model_config = {"populate_by_name": True}
